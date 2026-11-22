@@ -1,82 +1,28 @@
 # ByteAI
 
-**ByteAI'ye her cihazdan bağlanma sayfası** · https://egegurkan.github.io/ByteAI/
+**Connect to ByteAI from any device** · https://egegurkan.github.io/ByteAI/
 
-ByteAI kendi bilgisayarında çalışan özel bir yapay zekâ çalışma alanıdır (Ollama + Open WebUI).
-Bu depo yalnızca küçük bir **yönlendirme sayfası** içerir: Tailscale adresini bir kez yazarsın,
-sayfa seni doğrudan kendi bilgisayarındaki Open WebUI'ye götürür.
-
-*English summary: a tiny GitHub Pages launcher. Enter your Tailscale machine address once and it
-redirects you to the Open WebUI running on your own ByteAI computer. The address stays in your
-browser only.*
+ByteAI is a private AI workspace that runs on your own computer. This repository contains only a small **redirect page**: enter your address once and the page takes you straight to the AI interface running on your own computer.
 
 ---
 
-## Nasıl kullanılır
+## How to use
 
-1. Telefonda veya diğer bilgisayarda **Tailscale** uygulamasını aç, ByteAI bilgisayarıyla aynı hesapla giriş yap.
-2. https://egegurkan.github.io/ByteAI/ adresine gir.
-3. ByteAI bilgisayarının tam Tailscale adresini (`.ts.net` ile biten) yaz ve **Bağlan**'a bas.
-   **Port** kutusunu boş bırakabilirsin; boşsa ByteAI'nin varsayılan `8443` portu kullanılır.
-4. **Hatırla** seçiliyse sonraki girişlerde sayfa 3 saniye içinde otomatik bağlanır.
-   **İptal**, **Değiştir** ve **Unut** düğmeleriyle bu davranışı her zaman kontrol edebilirsin.
+1. On your phone or other computer, open the preferred app and sign in with the same account as the ByteAI computer.
+2. Go to https://egegurkan.github.io/ByteAI/.
+3. Enter the full address of the ByteAI computer (and press **Connect**. You can leave the **Port** box empty; if it is empty, ByteAI's default port is used.
+4. If **Remember** is checked, the page connects automatically within 3 seconds on your next visits. You can always control this with the **Cancel**, **Change** and **Forget** buttons.
 
-Kabul edilen biçimler:
+To save it as a bookmark, append the address to the page URL after `#` (the fields open pre-filled): `https://egegurkan.github.io/ByteAI/#address` — everything after `#` stays in the browser and is never sent anywhere.
 
-| Yazdığın | Açılan adres |
-|---|---|
-| `bilgisayar.tailxxxx.ts.net` | `https://bilgisayar.tailxxxx.ts.net:8443/` |
-| `bilgisayar.tailxxxx.ts.net:9443` | `https://bilgisayar.tailxxxx.ts.net:9443/` |
-| `https://bilgisayar.tailxxxx.ts.net:8443/` | aynen |
+> A short machine name (`computer`) or a `100.x.y.z` IP address may not work.
 
-Yer imi olarak kaydetmek için adresi sayfa adresinin sonuna `#` ile ekleyebilirsin (alanlar dolu açılır):
-`https://egegurkan.github.io/ByteAI/#bilgisayar.tailxxxx.ts.net`
-— `#` sonrası tarayıcıdan dışarı gönderilmez.
+## Privacy
 
-> Kısa makine adı (`bilgisayar`) veya `100.x.y.z` IP adresi çalışmaz: Tailscale'in HTTPS sertifikası
-> yalnızca tam `.ts.net` adı için geçerlidir.
+- The page is a single static `index.html` file: no server side, analytics, cookies or external resources.
+- The  address is kept only in your browser's `localStorage` and is never sent to GitHub or anywhere else.
+- Your chats, models and files stay on your own computer; this page only redirects you there.
 
-## ByteAI bilgisayarında bir kez yapılacaklar
+## License
 
-ByteAI kurulum klasöründe (`UI\Setup`):
-
-```powershell
-Script-START.cmd
-```
-
-```powershell
-.\15-Tailscale-Serve.ps1 -Enable
-```
-
-`15-Tailscale-Serve.ps1` sonunda yazan **"Diger cihazlarda: https://…ts.net:8443"** satırı,
-bu sayfaya yazacağın adrestir.
-
-| Ne | Nerede |
-|---|---|
-| Open WebUI (bu bilgisayar) | `http://localhost:3000` |
-| Open WebUI (Tailscale) | `https://<bilgisayar>.ts.net:8443` |
-| Paylaşımı kapatmak | `.\15-Tailscale-Serve.ps1 -Disable` |
-
-Paylaşım yalnızca **senin tailnet'indeki** cihazlara açıktır. `tailscale funnel` kullanma ve modemde
-port yönlendirmesi açma; bu sayfa internete hiçbir port açmaz.
-
-## Gizlilik
-
-- Sayfa tek bir statik `index.html` dosyasıdır; sunucu tarafı, analiz, çerez veya dış kaynak yoktur.
-- Tailscale adresi yalnızca tarayıcının `localStorage` alanında tutulur, GitHub'a veya başka bir yere gönderilmez.
-- Sohbetler, modeller ve dosyalar kendi bilgisayarında kalır; bu sayfa sadece oraya yönlendirir.
-- Tailscale adresini bu depoya **yazma**: depo herkese açıktır.
-
-## GitHub Pages'te yayınlama
-
-1. GitHub'da `ByteAI` adlı yeni bir depo oluştur.
-2. Bu klasördeki `index.html`, `README.md` ve `LICENSE` dosyalarını deponun köküne yükle.
-3. **Settings → Pages → Build and deployment**: *Deploy from a branch*, branch `main`, klasör `/ (root)`.
-4. Birkaç dakika sonra sayfa https://egegurkan.github.io/ByteAI/ adresinde açılır.
-
-> Bu klasör ByteAI kurulumunun içinde durur, ama **ByteAI klasörünün tamamını** depoya yükleme:
-> içinde `Secrets` (API anahtarları), modeller ve sohbet verileri vardır.
-
-## Lisans
-
-[MIT](LICENSE) © 2026 the ByteAI contributors
+[MIT](LICENSE) © 2026 the ByteAI Contributors

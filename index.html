@@ -1,16 +1,16 @@
 <!doctype html>
 <!--
-ByteAI - Tailscale baglanti sayfasi / Tailscale connect page
+ByteAI
 
 MIT License
 
-Copyright (c) 2026 the ByteAI contributors
+Copyright (c) 2026 the ByteAI Contributors
 
 See LICENSE in this repository.
 
-Bu sayfa yalnizca yonlendirir: girilen Tailscale adresi sadece bu tarayicinin
+Bu sayfa yalnizca yonlendirir: girilen adres sadece bu tarayicinin
 localStorage alaninda tutulur, hicbir sunucuya (GitHub dahil) gonderilmez.
-This page only redirects: the Tailscale address is kept in this browser's
+This page only redirects: the address is kept in this browser's
 localStorage and is never sent to any server (including GitHub).
 -->
 <html lang="tr" data-theme="system"><head>
@@ -112,20 +112,20 @@ footer{display:flex;align-items:center;gap:14px;padding:12px 16px;border-top:1px
 var K={server:'byteai.server',auto:'byteai.auto',lang:'byteai.lang',theme:'byteai.theme'};
 var AUTO_SECONDS=3;
 var T={
-tr:{suite:'OpenWebUI - Özel yapay zeka çalışma alanı',
+tr:{suite:'Özel yapay zeka çalışma alanı',
 tag:'Kendi bilgisayarındaki yapay zekaya her cihazdan bağlan.',savedServer:'Kayıtlı sunucu',open:'Aç',cancel:'İptal',change:'Değiştir',forget:'Unut',
-hostLabel:'<span lang="en">Tailscale</span> adresi',portTitle:'Boş bırakılırsa 8443 kullanılır',remember:'Hatırla ve sonraki girişlerde otomatik bağlan',connect:'Bağlan',
+hostLabel:'<span lang="en">Address</span> adresi',portTitle:'Boş bırakılırsa 3000 kullanılır',remember:'Hatırla ve sonraki girişlerde otomatik bağlan',connect:'Bağlan',
 autoIn:function(n){return n+' sn içinde bağlanılıyor...'},redirecting:'Yönlendiriliyor...',
-eEmpty:'Tailscale adresini yazın.',eInvalid:'Geçerli bir adres değil.',
-eShort:'Tam adresi yazın (".ts.net" ile biten). Kısa makine adı HTTPS ile çalışmaz.',eTs:'Adres ".ts.net" ile bitmeli. Tailscale yönetim panelindeki Machines bölümünden makine adının tam hâlini kullanın.',ePort:'Port 1-65535 arasında olmalı.',
+eEmpty:'Adresi yazın.',eInvalid:'Geçerli bir adres değil.',
+eShort:'Tam adresi yazın (".ts.net" ile biten). Kısa makine adı HTTPS ile çalışmaz.',eTs:'Adres ".ts.net" ile bitmeli. Yönetim panelindeki Machines bölümünden makine adının tam hâlini kullanın.',ePort:'Port 1-65535 arasında olmalı.',
 disc:'Bu sayfa yalnızca yönlendirir; veri toplamaz. Sohbetler kendi bilgisayarında kalır.',
 themeT:{system:'Tema: sistem',light:'Tema: açık',dark:'Tema: koyu'}},
-en:{suite:'OpenWebUI - Private AI workspace',
+en:{suite:'Private AI workspace',
 tag:'Reach the AI on your own computer from any device.',savedServer:'Saved server',open:'Open',cancel:'Cancel',change:'Change',forget:'Forget',
-hostLabel:'<span lang="en">Tailscale</span> address',portTitle:'Leave empty to use 8443',remember:'Remember and connect automatically next time',connect:'Connect',
+hostLabel:'<span lang="en">Address</span> address',portTitle:'Leave empty to use 3000',remember:'Remember and connect automatically next time',connect:'Connect',
 autoIn:function(n){return 'Connecting in '+n+' s...'},redirecting:'Redirecting...',
-eEmpty:'Enter your Tailscale address.',eInvalid:'This is not a valid address.',
-eShort:'Enter the full name (ending in ".ts.net"). A short machine name does not work over HTTPS.',eTs:'The address must end in ".ts.net". Use the full machine name from the Tailscale admin console (Machines).',ePort:'Port must be between 1 and 65535.',
+eEmpty:'Enter your address.',eInvalid:'This is not a valid address.',
+eShort:'Enter the full name (ending in ".ts.net"). A short machine name does not work over HTTPS.',eTs:'The address must end in ".ts.net". Use the full machine name from the admin console (Machines).',ePort:'Port must be between 1 and 65535.',
 disc:'This page only redirects and collects no data. Your chats stay on your own computer.',
 themeT:{system:'Theme: system',light:'Theme: light',dark:'Theme: dark'}}};
 
@@ -163,7 +163,7 @@ function build(raw,portRaw){
   if(!host||/[^a-z0-9.-]/.test(host))return{err:'eInvalid'};
   if(host.indexOf('.')<0)return{err:'eShort'};
   if(!/\.ts\.net$/.test(host))return{err:'eTs'};
-  var port=u.port||String(portRaw||'').trim()||'8443';
+  var port=u.port||String(portRaw||'').trim()||'3000';
   if(!/^\d{1,5}$/.test(port)||+port<1||+port>65535)return{err:'ePort'};
   return{url:'https://'+host+(port==='443'?'':':'+port)+'/',host:host,port:port};
 }
@@ -192,7 +192,7 @@ function showSaved(){
 }
 $('openSaved').onclick=function(){stopAuto();var s=ls(K.server);if(s){ss('byteai.redirected','1');go(s,false)}};
 $('cancelAuto').onclick=stopAuto;
-$('change').onclick=function(){stopAuto();var s=ls(K.server)||'';try{var u=new URL(s);$('host').value=u.hostname;$('port').value=(u.port&&u.port!=='8443')?u.port:(u.port?'':'443')}catch(e){}
+$('change').onclick=function(){stopAuto();var s=ls(K.server)||'';try{var u=new URL(s);$('host').value=u.hostname;$('port').value=(u.port&&u.port!=='3000')?u.port:(u.port?'':'443')}catch(e){}
   $('savedBox').hidden=true;$('form').hidden=false;$('host').focus()};
 $('forget').onclick=function(){stopAuto();ls(K.server,null);ls(K.auto,null);$('host').value='';$('port').value='';showSaved();$('host').focus()};
 
@@ -211,7 +211,7 @@ function fromHash(){
   var h=decodeURIComponent((location.hash||'').replace(/^#/,''));
   if(!h)return;
   var r=build(h,'');
-  if(!r.err){$('host').value=r.host;$('port').value=r.port!=='8443'?r.port:''}
+  if(!r.err){$('host').value=r.host;$('port').value=r.port!=='3000'?r.port:''}
 }
 
 applyLang();
