@@ -1,8 +1,8 @@
 # ByteAI
 
-**Connect to ByteAI from any device** · https://egegurkan.github.io/ByteAI/
-
 ByteAI is a private AI workspace that runs on your own computer. This repository contains only a small **redirect page**: enter your address once and the page takes you straight to the AI interface running on your own computer.
+
+**Connect to ByteAI from any device** · https://egegurkan.github.io/ByteAI/
 
 ---
 
